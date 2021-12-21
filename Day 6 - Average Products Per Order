@@ -1,0 +1,11 @@
+6 - Avg Prods Per Order = 
+VAR _Result =
+    AVERAGEX (
+        ADDCOLUMNS (
+            SUMMARIZE ( Orders, Orders[OrderID] ),
+            "@DistinctProds", CALCULATE ( DISTINCTCOUNT ( Orders[ProductID] ) )
+        ),
+        [@DistinctProds]
+    )
+RETURN
+    _Result
