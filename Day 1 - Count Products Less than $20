@@ -1,0 +1,5 @@
+1 - Count Products Less Than $20 = 
+CALCULATE(
+    DISTINCTCOUNT(Products[ProductID]),
+    FILTER(Products, Products[Unit Price] < 20 && Products[Discontinued] = FALSE)  
+)
