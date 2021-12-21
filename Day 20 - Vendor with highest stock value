@@ -1,0 +1,14 @@
+20 - Vendor Highest Stock Value = 
+VAR _StockValueByVendor = 
+ADDCOLUMNS(
+    SUMMARIZE(
+        Suppliers,
+        Suppliers[CompanyName]),
+        "Stock Value",
+        CALCULATE(
+            SUMX(Products, Products[UnitsInStock] * Products[UnitPrice])
+        )
+)
+VAR _TopVendor = TOPN(1, _StockValueByVendor, [Stock Value])
+Return 
+SELECTCOLUMNS(_TopVendor, "CompanyName", [CompanyName])
