@@ -1,0 +1,12 @@
+11 - Number of customers with one order =
+VAR _OrdersPerCustomer =
+    ADDCOLUMNS (
+        SUMMARIZE ( Customers, Customers[CustomerID] ),
+        "@NumOrders", CALCULATE ( DISTINCTCOUNT ( Orders[OrderID] ) )
+    )
+VAR _SingleOrderCustomers =
+    FILTER ( _OrdersPerCustomer, [@NumOrders] = 1 )
+VAR _CountSingleOrderCustomers =
+    COUNTROWS ( _SingleOrderCustomers )
+RETURN
+    _CountSingleOrderCustomers
