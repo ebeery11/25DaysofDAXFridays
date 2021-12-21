@@ -1,0 +1,5 @@
+5 - Count of Products between 15 and 25 = 
+CALCULATE(
+    DISTINCTCOUNT(Products[ProductID]),
+    FILTER(Products, Products[UnitPrice] >= 15 && Products[UnitPrice] <= 25)
+)
