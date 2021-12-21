@@ -1,0 +1,5 @@
+17 - Count of Products Needing Restocked = 
+CALCULATE(
+    DISTINCTCOUNT(Products[ProductID]),
+    FILTER(Products, Products[UnitsInStock] < Products[Restock level])
+)
