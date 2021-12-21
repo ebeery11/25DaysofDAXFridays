@@ -1,0 +1,22 @@
+15 - # of Customers Who Purchased Only QC on Order = 
+VAR _OrdersWithQC =
+    CALCULATETABLE (
+        VALUES ( Orders[OrderID] ),
+        Products[ProductName] = "Queso Cabrales"
+    )
+VAR _ProdsByOrder =
+    CALCULATETABLE (
+        ADDCOLUMNS (
+            SUMMARIZE ( Orders, Orders[CustomerID], Orders[OrderID] ),
+            "@DistinctProds", CALCULATE ( DISTINCTCOUNT ( Orders[ProductID] ) )
+        ),
+        Orders[OrderID] IN _OrdersWithQC
+    )
+VAR _SingleItemOrdersWithQC =
+    FILTER ( _ProdsByOrder, [@DistinctProds] = 1 )
+VAR _CustomerIDs =
+    SUMMARIZE ( _SingleItemOrdersWithQC, Orders[CustomerID] )
+VAR _CountCustomers =
+    COUNTROWS ( _CustomerIDs )
+RETURN
+    _CountCustomers
