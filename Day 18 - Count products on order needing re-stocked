@@ -1,0 +1,15 @@
+18 - Products on Order Needing Re-stocked = 
+VAR _Result1 = 
+CALCULATE(
+    DISTINCTCOUNT(Orders[ProductID]),
+    FILTER(Products, Products[UnitsInStock] < Products[ReorderLevel]),
+    ISBLANK(Orders[ShippedDate])
+)
+VAR _Result2 = 
+CALCULATE(
+    DISTINCTCOUNT(Products[ProductID]),
+    FILTER(Products, Products[UnitsInStock] < Products[ReorderLevel]),
+    FILTER(products, Products[UnitsOnOrder] > 0)
+)
+Return 
+_Result2
