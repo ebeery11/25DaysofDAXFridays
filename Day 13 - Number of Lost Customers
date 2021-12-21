@@ -1,0 +1,12 @@
+13 - # Lost Customer = 
+// Calculates number of "lost customers", where "lost" is defined as no orders in 2021 (but orders prior)
+VAR _TotalCustomersWithOrders =
+    VALUES ( Orders[CustomerID] )
+VAR _2021CustomersWithOrders =
+    CALCULATETABLE ( VALUES ( Orders[CustomerID] ), 'Calendar'[Year] = 2021 )
+VAR _LostCustomers =
+    EXCEPT ( _TotalCustomersWithOrders, _2021CustomersWithOrders )
+VAR _CountLostCustomers =
+    COUNTROWS ( _LostCustomers )
+RETURN
+    _CountLostCustomers
