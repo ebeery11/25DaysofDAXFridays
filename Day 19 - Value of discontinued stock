@@ -1,0 +1,5 @@
+19 - Stocked Value Discontinued = 
+CALCULATE(
+    SUMX(Products, Products[UnitsInStock] * Products[UnitPrice]),
+    FILTER(Products, Products[Discontinued] = TRUE)
+)
