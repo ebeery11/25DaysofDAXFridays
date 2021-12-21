@@ -1,0 +1,24 @@
+12 - # New Customers = 
+VAR _CustomersWithNewDate =
+    CALCULATETABLE (
+        ADDCOLUMNS (
+            VALUES ( Orders[CustomerID] ),
+            "@NewCustomerDate",
+                CALCULATE (
+                    MIN ( Orders[OrderDate] ),
+                    ALLEXCEPT ( Orders, Orders[CustomerID], Customers )
+                )
+        ),
+        ALLSELECTED ( Customers ),
+        ALLSELECTED ( 'Calendar' )
+    )
+VAR _CustomersWithLineage =
+    TREATAS ( _CustomersWithNewDate, Customers[CustomerID], 'Calendar'[Date] )
+VAR _Result =
+    CALCULATE (
+        DISTINCTCOUNT ( Orders[CustomerID] ),
+        KEEPFILTERS ( _CustomersWithLineage ),
+        FILTER ( ALL ( 'Calendar' ), 'Calendar'[Year] = 2021 )
+    )
+RETURN
+    _Result
