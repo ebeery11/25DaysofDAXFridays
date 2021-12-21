@@ -1,0 +1,16 @@
+14 - Count Customers Who Haven't Purchased QC = 
+VAR _AllCustomersWithPurchases =
+    VALUES ( Orders[CustomerID] )
+VAR _AllCustomersTotal =
+    VALUES ( Customers[CustomerID] )
+VAR _CustomersPurchasingQC =
+    CALCULATETABLE (
+        VALUES ( Orders[CustomerID] ),
+        Products[ProductName] = "Queso Cabrales"
+    )
+VAR _CustomersNeverPurchasingQC =
+    EXCEPT ( _AllCustomersWithPurchases, _CustomersPurchasingQC )
+VAR _Result =
+    COUNTROWS ( _CustomersNeverPurchasingQC )
+RETURN
+    _Result
