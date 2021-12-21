@@ -1,0 +1,5 @@
+16 - Products out of stock = 
+CALCULATE(
+    DISTINCTCOUNT(Products[ProductID]),
+    FILTER(Products,[UnitsInStock] = 0)
+)
