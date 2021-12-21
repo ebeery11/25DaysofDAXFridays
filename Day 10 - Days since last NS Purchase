@@ -1,0 +1,10 @@
+10 - Days since last N/S purchase = 
+VAR _NSLastPurchaseDate = 
+CALCULATE(
+    MAX(Orders[OrderDate]),
+    FILTER(Customers, Customers[CompanyName] = "North/South")
+)
+VAR _Today = TODAY()
+VAR _DaysSince = DATEDIFF( _NSLastPurchaseDate, TODAY(), DAY)
+Return
+_DaysSince
