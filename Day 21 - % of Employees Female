@@ -1,0 +1,12 @@
+21 - % Employees Female = 
+VAR _CountTotalEmployees =
+    DISTINCTCOUNT ( Employees[EmployeeID] )
+VAR _CountFemale =
+    CALCULATE (
+        DISTINCTCOUNT ( Employees[EmployeeID] ),
+        FILTER ( Employees, Employees[Gender] = "Female" )
+    )
+VAR _Result =
+    DIVIDE ( _CountFemale, _CountTotalEmployees )
+RETURN
+    _Result
