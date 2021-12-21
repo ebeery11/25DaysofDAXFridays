@@ -1,0 +1,17 @@
+2 - Most Expensive Product = 
+VAR _TopProducts = 
+TOPN(
+    1, Products, [Unit Price]
+)
+
+VAR _MaxPrice = 
+MAX(Products[UnitPrice])
+
+VAR _TopProduct = 
+IF(
+    COUNTROWS(_TopProducts) = 1,
+    LOOKUPVALUE(Products[ProductName], Products[UnitPrice], _MaxPrice),
+    "Multiple Top Products"
+)
+Return
+_TopProduct
