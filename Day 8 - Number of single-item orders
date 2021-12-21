@@ -1,0 +1,12 @@
+8 - Number of single-item orders = 
+VAR _ProdsByOrder =
+    ADDCOLUMNS (
+        SUMMARIZE ( Orders, Orders[OrderID] ),
+        "@DistinctProds", CALCULATE ( DISTINCTCOUNT ( Orders[ProductID] ) )
+    )
+VAR _SingleItemOrders =
+    FILTER ( _ProdsByOrder, [@DistinctProds] = 1 )
+VAR _CountSingleItemOrders =
+    COUNTROWS ( _SingleItemOrders )
+RETURN
+    _CountSingleItemOrders
