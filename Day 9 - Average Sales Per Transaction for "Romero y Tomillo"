@@ -1,0 +1,14 @@
+9 - Average Sales Per Transaction for "Romero  y Tomillo" = 
+VAR _RTOrders = 
+CALCULATE(
+    DISTINCTCOUNT(Orders[OrderID]),
+    FILTER(Customers, Customers[CustomerID] = "ROMEY")
+)
+VAR _RTSales = 
+CALCULATE(
+    [Total sales],
+    FILTER(Customers, Customers[CustomerID] = "ROMEY")
+)
+VAR _Result = DIVIDE(_RTSales, _RTOrders)
+Return
+_Result
