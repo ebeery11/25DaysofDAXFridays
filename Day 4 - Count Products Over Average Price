@@ -1,0 +1,15 @@
+4 - Count Products Over Average Price = 
+VAR _AvgPrice = 
+CALCULATE(
+    AVERAGE(Products[UnitPrice]),
+    ALL(Products)
+)
+
+VAR _CountProductsOverAverage = 
+CALCULATE(
+    DISTINCTCOUNT(Products[ProductID]),
+    FILTER(Products, Products[UnitPrice] > _AvgPrice)
+)
+
+Return
+_CountProductsOverAverage
