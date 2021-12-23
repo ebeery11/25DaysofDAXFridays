@@ -1,0 +1,17 @@
+22 - Count Employees Over 60 = 
+VAR _Emps =
+    ADDCOLUMNS (
+        SUMMARIZE ( Employees, Employees[EmployeeID] ),
+        "@Birthdate", SELECTEDVALUE ( Employees[BirthDate] ),
+        "@Age",
+            DIVIDE (
+                CALCULATE ( ( TODAY () - SELECTEDVALUE ( Employees[BirthDate] ) ) ),
+                365
+            )
+    )
+VAR _Over60 =
+    FILTER ( _Emps, [@Age] > 60 )
+VAR _CountOver60 =
+    COUNTROWS ( _Over60 )
+RETURN
+    _CountOver60
