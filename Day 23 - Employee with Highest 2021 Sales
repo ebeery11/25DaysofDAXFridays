@@ -1,0 +1,12 @@
+23 - Employee w/ Highest 2021 Sales = 
+VAR _EmpsWithSales =
+    ADDCOLUMNS (
+        SUMMARIZE ( Employees, Employees[EmployeeID], Employees[Full Name] ),
+        "@Sales", CALCULATE ( [Total sales], 'Calendar'[Year] = 2021 )
+    )
+VAR _TopEmp =
+    TOPN ( 1, _EmpsWithSales, [@Sales], DESC )
+VAR _TopName =
+    SELECTCOLUMNS ( _TopEmp, "Name", [Full Name] )
+RETURN
+    _TopName
