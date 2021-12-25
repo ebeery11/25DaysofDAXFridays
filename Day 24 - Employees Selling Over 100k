@@ -1,0 +1,12 @@
+24 - Count 100k+ 2021 Employees = 
+VAR _EmpsWithSales =
+    ADDCOLUMNS (
+        SUMMARIZE ( Employees, Employees[EmployeeID], Employees[Full Name] ),
+        "@Sales", CALCULATE ( [Total sales], 'Calendar'[Year] = 2021 )
+    )
+VAR _Over100k =
+    FILTER ( _EmpsWithSales, [@Sales] > 100000 )
+VAR _CountOver100k =
+    COUNTROWS ( _Over100k )
+RETURN
+    _CountOver100k
